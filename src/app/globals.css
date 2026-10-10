@@ -1,0 +1,330 @@
+@import "tailwindcss";
+
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+:root {
+  color-scheme: dark;
+  --bg: #020617;
+  --surface: #141b2a;
+  --surface-2: #0b1222;
+  --well: #020617;
+  --fg: #ffffff;
+  --fg-2: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #8dff57;
+  --on-accent: #10210c;
+  --accent-ink: #8dff57;
+  --emerald: #10b981;
+  --deep: #123524;
+  --amber: #fbbf24;
+  --info: #60a5fa;
+  --rose: #fb7185;
+  --line: rgb(255 255 255 / 0.1);
+  --line-strong: rgb(255 255 255 / 0.16);
+  --glow: rgb(141 255 87 / 0.22);
+  --glow-soft: rgb(16 185 129 / 0.16);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f6f0;
+  --surface: #ffffff;
+  --surface-2: #edf2e9;
+  --well: #e7eee2;
+  --fg: #102018;
+  --fg-2: #3e4c44;
+  --muted: #56645b;
+  --accent: #8dff57;
+  --on-accent: #10210c;
+  --accent-ink: #3f8f1f;
+  --emerald: #047857;
+  --deep: #dcefd3;
+  --amber: #b45309;
+  --info: #1d4ed8;
+  --rose: #be123c;
+  --line: rgb(16 32 24 / 0.1);
+  --line-strong: rgb(16 32 24 / 0.18);
+  --glow: rgb(110 220 60 / 0.28);
+  --glow-soft: rgb(16 185 129 / 0.14);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-well: var(--well);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-emerald: var(--emerald);
+  --color-deep: var(--deep);
+  --color-amber: var(--amber);
+  --color-info: var(--info);
+  --color-rose: var(--rose);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --radius-btn: 14px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  [data-theme="light"] :focus-visible {
+    outline-color: #2f6f15;
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+
+  .confirm {
+    background: rgb(251 191 36 / 0.16);
+    color: var(--amber);
+    border: 1px dashed rgb(251 191 36 / 0.5);
+    border-radius: 6px;
+    padding: 0 0.3em;
+    font-weight: 600;
+  }
+
+  .hero-glow {
+    background: radial-gradient(
+      circle at center,
+      var(--glow) 0%,
+      var(--glow-soft) 35%,
+      transparent 70%
+    );
+  }
+}
+
+/* Concentric pulse rings behind the logo */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes live-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 4.8s ease-out infinite;
+}
+
+.live-dot {
+  animation: live-dot 1.6s ease-in-out infinite;
+}
+
+.fade-in {
+  animation: fade-in 300ms ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .pulse-ring {
+    animation: none;
+    opacity: 0.25;
+  }
+}
+
+/* Long-form content (blog posts and legal documents) */
+.prose-op {
+  color: var(--fg-2);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.prose-op > * + * {
+  margin-top: 1.15em;
+}
+
+.prose-op h2 {
+  color: var(--fg);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-top: 2.2em;
+  scroll-margin-top: 6rem;
+}
+
+.prose-op h3 {
+  color: var(--fg);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 1.8em;
+  scroll-margin-top: 6rem;
+}
+
+.prose-op h2:first-child {
+  margin-top: 0;
+}
+
+.prose-op a {
+  color: var(--accent-ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.prose-op a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.prose-op strong {
+  color: var(--fg);
+  font-weight: 700;
+}
+
+.prose-op ul,
+.prose-op ol {
+  padding-left: 1.4em;
+}
+
+.prose-op ul {
+  list-style: disc;
+}
+
+.prose-op ol {
+  list-style: decimal;
+}
+
+.prose-op li + li {
+  margin-top: 0.45em;
+}
+
+.prose-op li::marker {
+  color: var(--accent-ink);
+}
+
+.prose-op blockquote {
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 14px 14px 0;
+  padding: 1em 1.25em;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.prose-op code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--well);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.1em 0.35em;
+}
+
+.prose-op hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.5em 0;
+}
+
+.prose-op table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.prose-op th,
+.prose-op td {
+  border: 1px solid var(--line);
+  padding: 0.6em 0.8em;
+  text-align: left;
+}
+
+.prose-op th {
+  color: var(--fg);
+  background: var(--surface);
+}
